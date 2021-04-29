@@ -1,4 +1,4 @@
-var connection = require('../connection');
+var connection = require('../Connections/animal_db');
 
 exports.getAll = () =>
 
