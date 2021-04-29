@@ -1,4 +1,4 @@
-var http = require('http');
+/* var http = require('http');
 var server = http.createServer(function(req, res) 
 {
     res.writeHead(200, {'content-type':'text/html'});
@@ -12,5 +12,13 @@ var server = http.createServer(function(req, res)
 });
 server.listen(8000);
 
+ */
 
+var express = require('express');
+var app=express();
+var bodyParser = require ('body-parser');
+var router=require('./server/router');
 
+app.use("/", router);
+
+app.listen(8000);
