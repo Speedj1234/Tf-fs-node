@@ -17,9 +17,9 @@ server.listen(8000);
 var express = require('express');
 var app=express();
 var bodyParser = require ('body-parser');
-var animalRouter=require('./server/Routers/animal_router');
-var actorRouter=require('./server/Routers/actors_router');
-var filmRouter=require('./server/Routers/films_router');
+var animalRouter=require('./server JS/Routers/animal_router');
+var actorRouter=require('./server JS/Routers/actors_router');
+var filmRouter=require('./server JS/Routers/films_router');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
