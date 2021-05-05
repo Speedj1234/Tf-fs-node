@@ -1,5 +1,6 @@
 import * as express from 'express';
 import{ ActorRouter } from './Routers/actors_router'
+import{ UserRouter } from './Routers/users_router'
 import * as cors from 'cors';
 
 export class Server 
@@ -24,6 +25,7 @@ export class Server
     private init_routes()
     {
         this.app.use('/api/movies/actors', new ActorRouter().router)
+        this.app.use('/api/movies/users', new UserRouter().router)
     }
     public start()
     {
