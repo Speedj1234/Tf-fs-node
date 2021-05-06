@@ -19,6 +19,8 @@ export class UserController
        
     }
 
+ 
+
     //CREATE ( INSERT) - PPOST
     public static async createUsers(req: Request, res:Response, next: NextFunction)
     {
@@ -62,11 +64,6 @@ export class UserController
             res.status(500).send(err);
         }
     }
-
-
-
-
-
 
 
 }

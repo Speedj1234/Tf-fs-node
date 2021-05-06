@@ -41,7 +41,11 @@ export class UserModel
                 return results;
             });
         });
+
     }
+
+ 
+
 
     //INSERT en POST
     public static async insertUser(user)
@@ -80,6 +84,37 @@ export class UserModel
            
         });
     }
+
+
+
+    //AUthentification
+
+    public static async checkPassword(username: string, password: string): Promise<boolean>
+    {
+        try
+        {
+            let res = await connect().then((conn) => 
+            {
+                return conn.query('SELECT id, username, password, email FROM users WHERE username=?', username).then((results) =>
+                {
+                    return results;
+                });
+            });
+    
+            if(res[0].password === password)
+            {
+                return true;
+            }
+        } catch(err)
+        {
+            console.error('[ERROR] checkPassword username : ' + username + ' password : ' + password);
+            //console.error(err);
+        }
+        return false;
+    }
+
+    
+
 
 
 
