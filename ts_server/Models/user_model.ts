@@ -89,13 +89,13 @@ export class UserModel
 
     //AUthentification
 
-    public static async checkPassword(username: string, password: string): Promise<boolean>
+    public static async checkPassword(username: string, password: string): Promise<any>
     {
         try
         {
             let res = await connect().then((conn) => 
             {
-                return conn.query('SELECT id, username, password, email FROM users WHERE username=?', username).then((results) =>
+                return conn.query('SELECT id, username, password, email, admin FROM users WHERE username=?', username).then((results) =>
                 {
                     return results;
                 });
@@ -103,14 +103,44 @@ export class UserModel
     
             if(res[0].password === password)
             {
-                return true;
+                return {success:true, admin: res[0].admin};
             }
         } catch(err)
         {
             console.error('[ERROR] checkPassword username : ' + username + ' password : ' + password);
             //console.error(err);
         }
-        return false;
+        return {success:false, admin:false};
+    }
+
+    
+
+    // GET ONE BY NAME
+
+    public static async getOneByName(name:any)
+    {
+        return connect().then((conn) =>
+        {
+            return conn.query('SELECT id, username, email FROM users where username=?', name).then((results)=>
+            {
+                return results;
+            });
+           
+        });
+    }
+
+    //GET ONE By EMAIL
+
+    public static async getOneBEmail(email:any)
+    {
+        return connect().then((conn) =>
+        {
+            return conn.query('SELEC T id, username, email FROM users where email=?', email).then((results)=>
+            {
+                return results;
+            });
+           
+        });
     }
 
     

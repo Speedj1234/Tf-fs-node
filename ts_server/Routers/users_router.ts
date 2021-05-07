@@ -11,12 +11,9 @@ export class UserRouter
     
         this.router.get('/', UserController.getAll);
 
-
         this.router.get('/:id', UserController.getOneById);
 
-        
-
-        this.router.post('/create', UserController.createUsers);
+       // this.router.post('/create', UserController.createUsers);
 
         this.router.delete('/:id', UserController.deleteUser);
 

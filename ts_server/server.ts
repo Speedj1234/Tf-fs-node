@@ -4,6 +4,7 @@ import{ UserRouter } from './Routers/users_router'
 import{AuthentificationRouter} from './Routers/authentification_router'
 
 import * as cors from 'cors';
+import { UserCommonRouter } from './Routers/user_common_router';
 
 export class Server 
 {
@@ -27,9 +28,13 @@ export class Server
     private init_routes()
     {
         this.app.use('/api/token', new AuthentificationRouter().router);
-        this.app.use(AuthentificationRouter.checkAuthorization);
+        this.app.use('/api/users-common/', new UserCommonRouter().router); // usercommon router (create and get by username)
+        this.app.use(AuthentificationRouter.checkAuthorization);  // require authenification from here
         this.app.use('/api/movies/actors', new ActorRouter().router)
-        this.app.use('/api/movies/users', new UserRouter().router)
+        this.app.use(AuthentificationRouter.checkAdmin);  // require admin privileges from here
+        this.app.use('/api/movies/users', new UserRouter().router) //user router (everything else)
+        
+        
     }
     public start()
     {

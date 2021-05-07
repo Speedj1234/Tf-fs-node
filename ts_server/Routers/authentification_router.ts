@@ -27,6 +27,7 @@ export class AuthentificationRouter
      * jeton dans la requête, et si ce jeton est valide.
      */
     public static checkAuthorization(req, res, next) {
+
         // normalement le jeton se trouve dans le header Authorization, mais
         // on pourrait aussi imaginer qu'il soit dans le body ou même dans l'url
         let token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['authorization'];
@@ -56,6 +57,41 @@ export class AuthentificationRouter
         }
     }
 
+
+
+
+
+
+
+
+    public static checkAdmin(req, res, next)
+
+        {
+
+            if (req.decoded.admin)
+
+            {
+
+            next(); // Passer à la route suivante, en fait (cf. dans server.ts)
+
+            }
+
+            else
+
+            {
+
+            return res.status(403).send({
+
+                success: false,
+
+                message: 'Requires admin privilege.'
+
+            })
+
+            }
+
+        }
+
     /**
      * Cette méthode permet de calculer et de renvoyer au client un jeton
      * JWT. La requête doit être un POST et doit contenir dans son body
@@ -74,9 +110,9 @@ export class AuthentificationRouter
         const password = req.body.password || null;
         // via MySql, cherche le membre correspondant en db
         let result = await UserModel.checkPassword(pseudo, password);
-        if(result)
+        if(result.success)
         {
-            const token = jwt.sign({ username: req.body.username }, 
+            const token = jwt.sign({ username: req.body.username, admin: result.admin }, 
                 'my-super-secret-key',
                 { expiresIn: 60 }); // le token exprire toutes les 60 secondes
             res.json({ success: true, message: 'logged in', token: token });
